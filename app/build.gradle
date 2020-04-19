@@ -22,10 +22,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // これと
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    // これ
     kotlinOptions {
         jvmTarget = '1.8'
     }

@@ -3,13 +3,14 @@ package io.github.takusan23.actionopendocumenttreesample
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +47,10 @@ class MainActivity : AppCompatActivity() {
             // リクエストコードが一致&成功のとき
             val uri = data?.data ?: return
             // Uriは再起すると使えなくなるので対策
-            contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
             // Uri保存。これでアプリ再起動後も使えます。
             prefSetting.edit {
                 putString("uri", uri.toString())
@@ -89,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             val textFile = findFile("test.txt") ?: return@apply
             // テキスト取り出す
             val text = contentResolver.openInputStream(textFile.uri)?.bufferedReader()?.readLine()
-            println(text)
             editText.setText(text)
         }
     }
